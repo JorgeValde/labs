@@ -8,39 +8,51 @@ Most of the work was made in Python using the Spyder app.
 
 The topics I worked are the following:
 I)	Creating a working environment in Python 
-II)	Order of the python scripts 
-III)	Input and output of every python script  
-IV)	Running time consuming scripts in the SU cluster.
-V)  Where my work ended.
+II)	Order of the python scripts
+III) Description of the scripts in the K-folder
+IV)	Input and output of every python script  
+V)	Running time consuming scripts in the SU cluster.
+VI)  Where my work ended.
+
 I will write a description for each with the proper procedure.
 
 I)	Creating a working environment in Python to be used by all the users 
 
 For a complete description of the necessary packages and the how to set up your local environment see the file "Python Order"
 
-I will include an explanaition on how to set up a general environment to be access by every user. 
-
-2)	Order of the python scripts
-
-The order of the python scripts to be run are detailed in the file "Python Order" 
-
-First, all the python scripts are located in:
-G:\MAX-Filer\Collab\Labs-kbuzard-S18\Admin\ramosRivera\T-Burk\Python Scripts
-
-To help understand what we are doing is good to start with the intuition of the procedure. 
-First, we are digitalizing the addresses of the labs. 
-Second, we are Geocoding those address to be able to locate them in a map using ArcMap. 
-Third, we are creating the clusters by running simulations. 
-Fourth, we are calculating the agglomerations effects. 
-
-In order to carry out the above four tasks the python scripts should be run in the following order:
-
-###Chain to run:
-Pdf2Jpg.py --> OCR.py --> pngwork.py --> Address_ID.py --> state_code_rep.py --> GeoCoder.py -->  field_org.py --> Shapify.py--> K-function Local_3Stage.py--> stat_calc.py
-                      
+I will include an explanation on how to set up a general environment to be access by every user. 
 
 
-3)	Input and output of every python script
+II)	Order of the python scripts
+
+The order of the python scripts to be run is detailed in the file "Python Order" in the Heterogeneity folder in GitHub.
+
+
+III) Description of the scripts in the K-function folder
+
+K function folder is run after shapify and it creates the buffers and clusters used in stat_calc.py
+The only k function file we need to run is "kfunction_3Stage.py" 
+
+This is a descripton of what each other script is doing. Only take it as clarification. 
+
+There is no clarification in Antonio's documentation about what file he is running. There are several python scripts called 3stage_local.py. 
+First: I start by looking at the files in the following folder "G: ...\Admin\kfunctions\Three Stage K-functions"
+
+* kfunction_3Stage (12/13/20): Construct functions necessary for 3 Stage Global/Local K-function estimation
+* kfunction_3Stage_JIT (10/19/20): Construct functions necessary for 3 Stage Global/Local K-function estimation
+
+kfunction_3Stage_JIT only difference with kfunction_3Stage is that the first uses "from numba import njit". The rest of the code is the same. 
+
+
+* K-function Local_3Stage (5/8/21): Estimates Local K-function for a vector of distances and simulates a set of point patterns relative/proportional to a given reference measure. Outputs are a set of P-values, K-counts and Buffer Cluster saved to ESRI Shapefiles.
+  ** In line 34 its using the following file "...\LabData\cal_lab_fields\PLAS\PLAS.shp". Therefore, it is only using the Plastic industry (looks like). The rest of the code is pretty much the same as "K-function Local_3Stage_JIT"
+  
+* K-function Local_3Stage_JIT (10/19/20):  Estimates Local K-function for a vector of distances and simulates a set of point patterns relative/proportional to a given reference measure. Outputs are a set of P-values, K-counts and Buffer Cluster saved to ESRI Shapefiles.
+  ** I changed line 36 in the code, the folder being called was wrong, I added /Block Data/ to the address. Originally it was "blocks = r"G:\MAX-Filer\Collab\Labs-kbuzard-S18\Admin\Block Level Analysis\CA_Block_New.shp"
+  The program run after that, faster than the "K-function Local_3Stage.py"
+  
+
+IV)	Input and output of every python script
 
 This section detail the inputs and outputs for every python script to make it easy to understand. 
 The diagram is constructed using the following order: 
@@ -150,7 +162,7 @@ v) Prep_Labs.py
 
 I used "USA_Labs_2000.shp" to create the US map for all the labs in ArcMap. 
 
-## The following are programs used for tests:
+## The following are programs have no especific function, looks like Antonio was tring to make the program faster and the following scripts are dfferent attemps to do that:
 * countSim_speedUp
 * countSim_tester
 * clust_pat_maker
@@ -158,7 +170,7 @@ I used "USA_Labs_2000.shp" to create the US map for all the labs in ArcMap.
 * multiprocessing_tester
 
 
-4)	Running time consuming scripts in the SU cluster.
+V)	Running time consuming scripts in the SU cluster.
 
 I got in contact with ICT to try to run the K-function Local_3Stage.py script in the SU cluster. This program takes a long time given that it is performing
 999 simulations. I was able to get access to the cluster and run the script. There are still several questions regarding the use of the cluster, for instance,
@@ -166,7 +178,7 @@ where is the cluster sending the output of the program?, is actually faster or n
 to run the program everytime we create a new environment in python?
 ICT is very helpful and fast in answering questions. 
 
-5)  Where my work ended.
+VI)  Where my work ended.
 
 The last python script I worked on was stat_calc.py. 
 Next is a description of the error and my troubleshooting proceses for future reference. 
